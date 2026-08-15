@@ -12,6 +12,7 @@ A digital money management platform where you divide your income into goal-based
 - Create jars with a target amount, optional monthly target, and emoji; deposit, withdraw, and track progress with an ETA
 - Income/expense transactions with categories and full history
 - CSRF-protected forms
+- Installable as a home-screen app on iOS/Android (PWA — manifest, icons, service worker)
 
 ## Tech stack
 
@@ -54,6 +55,10 @@ frontend/
   templates/        # Jinja templates
   static/css/       # styling
 ```
+
+## Running it on your phone, for free
+
+See [DEPLOY.md](DEPLOY.md) for step-by-step instructions to host this on PythonAnywhere's free tier and install it to your iPhone/Android home screen as an app.
 
 ## Roadmap
 
