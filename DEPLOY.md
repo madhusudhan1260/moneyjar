@@ -23,8 +23,8 @@ Two parts: host the app somewhere always-reachable (PythonAnywhere's free tier),
 5. Go to the **Web** tab → **Add a new web app** → choose **Manual configuration** → pick the Python version matching your virtualenv (3.10).
 6. In the web app's settings page, set:
    - **Source code**: `/home/YOUR_USERNAME/moneyjar/backend`
-   - **Working directory**: `/home/YOUR_USERNAME/moneyjar/backend`
    - **Virtualenv**: `/home/YOUR_USERNAME/.virtualenvs/moneyjar-venv`
+   - Leave **Working directory** at its default (`/home/YOUR_USERNAME/`) — it doesn't need to change, since the WSGI file below adds the backend folder to `sys.path` itself.
 7. Click the **WSGI configuration file** link and replace its contents with `backend/wsgi_pythonanywhere_template.py` from this repo — just swap `YOUR_USERNAME` for your actual PythonAnywhere username.
 8. Click the big green **Reload** button.
 9. Your app is now live at `https://YOUR_USERNAME.pythonanywhere.com` — HTTPS included, which is required for the installable app step below.
@@ -42,5 +42,5 @@ You'll get a MoneyJar icon on your home screen that opens full-screen, no browse
 
 ## Notes
 
-- Free PythonAnywhere accounts require you to log in to the dashboard at least once every 3 months, or the web app gets disabled — a 30-second visit resets the clock.
+- Free PythonAnywhere accounts aren't a one-month trial — they're free forever, but the site auto-disables after 1 month of you not checking in. Log into the dashboard and click **"Run until 1 month from today"** on the Web tab about once a month (PythonAnywhere emails you a reminder a week before it would lapse) to keep it running.
 - Your data lives in `backend/moneyjar.db` on PythonAnywhere's persistent disk, so it survives reloads and restarts (unlike some other free hosts that wipe the filesystem).
