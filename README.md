@@ -11,6 +11,7 @@ A digital money management platform where you divide your income into goal-based
 - Rule-based spending insight comparing this month's top category to last month
 - Create jars with a target amount, optional monthly target, and emoji; deposit, withdraw, and track progress with an ETA
 - Income/expense transactions with categories and full history
+- Import transactions from a Paytm (or any bank/UPI app) statement export (CSV/Excel) — auto-categorized, duplicate-safe
 - CSRF-protected forms
 - Installable as a home-screen app on iOS/Android (PWA — manifest, icons, service worker)
 

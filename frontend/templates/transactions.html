@@ -3,7 +3,10 @@
 {% block content %}
 <div class="section-header">
   <h1>Transaction History</h1>
-  <a class="btn btn-primary" href="{{ url_for('transactions.create') }}">+ Add Transaction</a>
+  <div class="jar-actions">
+    <a class="btn btn-secondary" href="{{ url_for('transactions.import_statement') }}">Import Statement</a>
+    <a class="btn btn-primary" href="{{ url_for('transactions.create') }}">+ Add Transaction</a>
+  </div>
 </div>
 {% if entries %}
 <table class="data-table">

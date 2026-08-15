@@ -14,3 +14,4 @@ class Config:
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PERMANENT_SESSION_LIFETIME = timedelta(days=7)
+    MAX_CONTENT_LENGTH = 5 * 1024 * 1024

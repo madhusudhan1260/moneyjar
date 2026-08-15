@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Import Transactions · MoneyJar{% endblock %}
+{% block content %}
+<div class="form-card">
+  <h1>Import from a statement</h1>
+  <p class="muted">
+    Export your Paytm statement (Passbook → Download Statement, CSV or Excel) for
+    any date range, then upload it here. Each row becomes a transaction, categorized
+    automatically where possible — duplicates already in your history are skipped.
+  </p>
+  <form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Statement file (.csv or .xlsx)
+      <input type="file" name="statement" accept=".csv,.xlsx,.xlsm" required>
+    </label>
+    <button type="submit" class="btn btn-primary">Import</button>
+  </form>
+</div>
+{% endblock %}
