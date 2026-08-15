@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Transactions · MoneyJar{% endblock %}
+{% block content %}
+<div class="section-header">
+  <h1>Transaction History</h1>
+  <a class="btn btn-primary" href="{{ url_for('transactions.create') }}">+ Add Transaction</a>
+</div>
+{% if entries %}
+<table class="data-table">
+  <thead><tr><th>Date</th><th>Type</th><th>Category</th><th>Description</th><th>Amount</th></tr></thead>
+  <tbody>
+    {% for e in entries %}
+    <tr>
+      <td>{{ e.date.strftime('%d %b %Y') }}</td>
+      <td><span class="badge badge-{{ e.type }}">{{ e.type.title() }}</span></td>
+      <td>{{ e.category }}</td>
+      <td>{{ e.description or "—" }}</td>
+      <td class="{{ 'amount-income' if e.type == 'income' else 'amount-expense' }}">
+        {{ '+' if e.type == 'income' else '-' }}₹{{ "{:,.0f}".format(e.amount) }}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="muted">No transactions yet.</p>
+{% endif %}
+{% endblock %}

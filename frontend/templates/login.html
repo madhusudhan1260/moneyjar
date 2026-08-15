@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Log in · MoneyJar{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <h1>🫙 MoneyJar</h1>
+  <p class="muted">Log in to your jars.</p>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Email
+      <input type="email" name="email" required autofocus>
+    </label>
+    <label>Password
+      <input type="password" name="password" required>
+    </label>
+    <button type="submit" class="btn btn-primary">Log in</button>
+  </form>
+  <p class="muted">No account? <a href="{{ url_for('auth.register') }}">Register</a></p>
+</div>
+{% endblock %}

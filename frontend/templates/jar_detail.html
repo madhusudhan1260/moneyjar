@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ jar.name }} · MoneyJar{% endblock %}
+{% block content %}
+<div class="jar-detail-card">
+  <h1>{{ jar.emoji }} {{ jar.name.upper() }} JAR</h1>
+  <div class="jar-detail-stats">
+    <div><span class="muted">Target</span><strong>₹{{ "{:,.0f}".format(jar.target_amount) }}</strong></div>
+    <div><span class="muted">Saved</span><strong>₹{{ "{:,.0f}".format(jar.saved_amount) }}</strong></div>
+    <div><span class="muted">Remaining</span><strong>₹{{ "{:,.0f}".format(jar.remaining) }}</strong></div>
+  </div>
+  <div class="progress-track large">
+    <div class="progress-fill" style="width: {{ jar.progress_pct }}%"></div>
+  </div>
+  <div class="jar-pct">{{ jar.progress_pct }}%</div>
+
+  {% if jar.monthly_target > 0 %}
+  <p class="muted">Monthly target: ₹{{ "{:,.0f}".format(jar.monthly_target) }}</p>
+  {% endif %}
+  {% if jar.estimated_completion %}
+  <p class="muted">Estimated completion: <strong>{{ jar.estimated_completion }}</strong></p>
+  {% endif %}
+
+  <div class="jar-actions">
+    <form method="post" action="{{ url_for('jars.deposit', jar_id=jar.id) }}" class="inline-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="number" name="amount" min="1" step="1" placeholder="Amount" required>
+      <button type="submit" class="btn btn-primary">+ Add Money</button>
+    </form>
+    <form method="post" action="{{ url_for('jars.withdraw', jar_id=jar.id) }}" class="inline-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="number" name="amount" min="1" step="1" placeholder="Amount" required>
+      <button type="submit" class="btn btn-secondary">Withdraw</button>
+    </form>
+    <form method="post" action="{{ url_for('jars.delete', jar_id=jar.id) }}" onsubmit="return confirm('Delete this jar?');">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="btn btn-danger">Delete Jar</button>
+    </form>
+  </div>
+</div>
+
+<div class="section-header"><h2>Jar History</h2></div>
+{% if entries %}
+<table class="data-table">
+  <thead><tr><th>Date</th><th>Type</th><th>Amount</th></tr></thead>
+  <tbody>
+    {% for e in entries %}
+    <tr>
+      <td>{{ e.date.strftime('%d %b %Y') }}</td>
+      <td>{{ e.type.title() }}</td>
+      <td>₹{{ "{:,.0f}".format(e.amount) }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="muted">No activity yet.</p>
+{% endif %}
+{% endblock %}

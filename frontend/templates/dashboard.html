@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · MoneyJar{% endblock %}
+{% block content %}
+<div class="summary-grid">
+  <div class="stat-card">
+    <span class="stat-label">Total Balance</span>
+    <span class="stat-value">₹{{ "{:,.0f}".format(total_balance) }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">This Month Spent</span>
+    <span class="stat-value">₹{{ "{:,.0f}".format(month_spent) }}</span>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Saved in Jars</span>
+    <span class="stat-value">₹{{ "{:,.0f}".format(saved_in_jars) }}</span>
+  </div>
+</div>
+
+{% if insight %}
+<div class="insight-card">
+  <span class="insight-tag">AI Insight</span>
+  <p>{{ insight }}</p>
+</div>
+{% endif %}
+
+<div class="section-header">
+  <h2>My Jars</h2>
+  <a class="btn btn-primary" href="{{ url_for('jars.create') }}">+ Create New Jar</a>
+</div>
+
+{% if jars %}
+<div class="jar-grid">
+  {% for jar in jars %}
+  <a class="jar-card" href="{{ url_for('jars.detail', jar_id=jar.id) }}">
+    <div class="jar-card-head">
+      <span class="jar-emoji">{{ jar.emoji }}</span>
+      <span class="jar-name">{{ jar.name }}</span>
+    </div>
+    <div class="jar-amounts">₹{{ "{:,.0f}".format(jar.saved_amount) }} / ₹{{ "{:,.0f}".format(jar.target_amount) }}</div>
+    <div class="progress-track">
+      <div class="progress-fill" style="width: {{ jar.progress_pct }}%"></div>
+    </div>
+    <div class="jar-pct">{{ jar.progress_pct }}%</div>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<p class="muted">No jars yet. Create one to start saving toward a goal.</p>
+{% endif %}
+
+{% if chart_labels %}
+<div class="section-header"><h2>Spending This Month</h2></div>
+<div class="chart-card">
+  <canvas id="spendChart" height="120"></canvas>
+</div>
+<script>
+  new Chart(document.getElementById('spendChart'), {
+    type: 'doughnut',
+    data: {
+      labels: {{ chart_labels | tojson }},
+      datasets: [{
+        data: {{ chart_values | tojson }},
+        backgroundColor: ['#6c5ce7', '#00b894', '#fdcb6e', '#e17055', '#0984e3', '#e84393', '#00cec9', '#636e72'],
+        borderWidth: 0,
+      }]
+    },
+    options: { plugins: { legend: { position: 'right', labels: { color: '#dfe6e9' } } } }
+  });
+</script>
+{% endif %}
+{% endblock %}

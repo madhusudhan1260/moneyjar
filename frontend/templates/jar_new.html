@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}New Jar · MoneyJar{% endblock %}
+{% block content %}
+<div class="form-card">
+  <h1>Create a Jar</h1>
+  <form method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label>Emoji
+      <select name="emoji">
+        {% for e in emojis %}
+        <option value="{{ e }}">{{ e }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Jar name
+      <input type="text" name="name" placeholder="e.g. Laptop" required autofocus>
+    </label>
+    <label>Target amount (₹)
+      <input type="number" name="target_amount" min="1" step="1" required>
+    </label>
+    <label>Monthly target (₹, optional)
+      <input type="number" name="monthly_target" min="0" step="1">
+    </label>
+    <button type="submit" class="btn btn-primary">Create Jar</button>
+  </form>
+</div>
+{% endblock %}

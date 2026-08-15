@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}MoneyJar{% endblock %}</title>
+  <meta name="description" content="Divide your money into goal-based jars and reach your savings goals faster.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🫙</text></svg>">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  {% if current_user.is_authenticated %}
+  <nav class="topnav">
+    <a class="brand" href="{{ url_for('dashboard.index') }}">🫙 MoneyJar</a>
+    <div class="nav-links">
+      <a href="{{ url_for('dashboard.index') }}">Dashboard</a>
+      <a href="{{ url_for('transactions.history') }}">Transactions</a>
+      <a href="{{ url_for('transactions.create') }}">+ Add Transaction</a>
+      <a href="{{ url_for('jars.create') }}">+ New Jar</a>
+      <a href="{{ url_for('auth.logout') }}">Logout ({{ current_user.name }})</a>
+    </div>
+  </nav>
+  {% endif %}
+
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-list">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
