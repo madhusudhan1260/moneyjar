@@ -1,7 +1,7 @@
 {
   "name": "MoneyJar",
   "short_name": "MoneyJar",
-  "description": "Divide your money into goal-based jars and reach your savings goals faster.",
+  "description": "Track your income, pocket money, savings, and expenses in one place.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f1115",

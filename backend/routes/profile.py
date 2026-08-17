@@ -25,11 +25,24 @@ def setup():
 
         current_user.monthly_income = _parse_amount(request.form.get("monthly_income"))
         current_user.pocket_money = _parse_amount(request.form.get("pocket_money"))
-        current_user.money_to_give = _parse_amount(request.form.get("money_to_give"))
         current_user.current_savings = _parse_amount(request.form.get("current_savings"))
         current_user.onboarded = True
         db.session.commit()
-        flash("Your financial snapshot is saved.", "success")
+        flash("Saved.", "success")
         return redirect(url_for("dashboard.index"))
 
     return render_template("setup.html")
+
+
+@bp.route("/savings/add", methods=["POST"])
+@login_required
+def add_savings():
+    amount = _parse_amount(request.form.get("amount"))
+    if amount <= 0:
+        flash("Enter a positive amount to add to savings.", "error")
+        return redirect(url_for("dashboard.index"))
+
+    current_user.current_savings += amount
+    db.session.commit()
+    flash(f"Added ₹{amount:,.0f} to your savings.", "success")
+    return redirect(url_for("dashboard.index"))

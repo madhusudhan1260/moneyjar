@@ -1,18 +1,32 @@
 {% extends "base.html" %}
 {% block title %}Dashboard · MoneyJar{% endblock %}
 {% block content %}
+<div class="section-header">
+  <h1>Your Money</h1>
+  <a class="btn btn-secondary" href="{{ url_for('profile.setup') }}">Edit</a>
+</div>
+
 <div class="summary-grid">
   <div class="stat-card">
-    <span class="stat-label">Total Balance</span>
-    <span class="stat-value">₹{{ "{:,.0f}".format(total_balance) }}</span>
+    <span class="stat-label">Pocket Money</span>
+    <span class="stat-value">₹{{ "{:,.0f}".format(current_user.pocket_money) }}</span>
   </div>
   <div class="stat-card">
-    <span class="stat-label">This Month Spent</span>
-    <span class="stat-value">₹{{ "{:,.0f}".format(month_spent) }}</span>
+    <span class="stat-label">Income</span>
+    <span class="stat-value">₹{{ "{:,.0f}".format(current_user.monthly_income) }}</span>
   </div>
   <div class="stat-card">
-    <span class="stat-label">Saved in Jars</span>
-    <span class="stat-value">₹{{ "{:,.0f}".format(saved_in_jars) }}</span>
+    <span class="stat-label">Savings</span>
+    <span class="stat-value">₹{{ "{:,.0f}".format(current_user.current_savings) }}</span>
+    <form method="post" action="{{ url_for('profile.add_savings') }}" class="inline-form" style="margin-top: 6px;">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="number" name="amount" min="1" step="1" placeholder="Add amount">
+      <button type="submit" class="btn btn-primary">+ Save</button>
+    </form>
+  </div>
+  <div class="stat-card">
+    <span class="stat-label">Total Expenses</span>
+    <span class="stat-value">₹{{ "{:,.0f}".format(total_expenses) }}</span>
   </div>
 </div>
 
@@ -21,45 +35,6 @@
   <span class="insight-tag">AI Insight</span>
   <p>{{ insight }}</p>
 </div>
-{% endif %}
-
-{% if current_user.monthly_income or current_user.pocket_money or current_user.money_to_give or current_user.current_savings %}
-<div class="section-header"><h2>Your Plan</h2><a class="btn btn-secondary" href="{{ url_for('profile.setup') }}">Edit</a></div>
-<div class="plan-grid">
-  <div class="plan-item"><span class="stat-label">Monthly Income</span><strong>₹{{ "{:,.0f}".format(current_user.monthly_income) }}</strong></div>
-  <div class="plan-item"><span class="stat-label">Pocket Money</span><strong>₹{{ "{:,.0f}".format(current_user.pocket_money) }}</strong></div>
-  <div class="plan-item"><span class="stat-label">To Give Others</span><strong>₹{{ "{:,.0f}".format(current_user.money_to_give) }}</strong></div>
-  <div class="plan-item"><span class="stat-label">Savings</span><strong>₹{{ "{:,.0f}".format(current_user.current_savings) }}</strong></div>
-</div>
-{% else %}
-<div class="insight-card">
-  <p>Haven't set up your financial snapshot yet. <a href="{{ url_for('profile.setup') }}">Add it now</a> — income, pocket money, dues, and savings, all in one place.</p>
-</div>
-{% endif %}
-
-<div class="section-header">
-  <h2>My Jars</h2>
-  <a class="btn btn-primary" href="{{ url_for('jars.create') }}">+ Create New Jar</a>
-</div>
-
-{% if jars %}
-<div class="jar-grid">
-  {% for jar in jars %}
-  <a class="jar-card" href="{{ url_for('jars.detail', jar_id=jar.id) }}">
-    <div class="jar-card-head">
-      <span class="jar-emoji">{{ jar.emoji }}</span>
-      <span class="jar-name">{{ jar.name }}</span>
-    </div>
-    <div class="jar-amounts">₹{{ "{:,.0f}".format(jar.saved_amount) }} / ₹{{ "{:,.0f}".format(jar.target_amount) }}</div>
-    <div class="progress-track">
-      <div class="progress-fill" style="width: {{ jar.progress_pct }}%"></div>
-    </div>
-    <div class="jar-pct">{{ jar.progress_pct }}%</div>
-  </a>
-  {% endfor %}
-</div>
-{% else %}
-<p class="muted">No jars yet. Create one to start saving toward a goal.</p>
 {% endif %}
 
 {% if chart_labels %}

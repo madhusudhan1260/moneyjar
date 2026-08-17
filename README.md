@@ -1,20 +1,21 @@
 # 🫙 MoneyJar
 
-A digital money management platform where you divide your income into goal-based savings jars — Emergency, Travel, Laptop, whatever you're saving for — and track progress with an AI-style spending insight.
+A simple personal money tracker: your income, pocket money, savings, and total expenses, all editable on one dashboard, with an AI-style spending insight.
 
-> Stage 1 MVP: budgeting/savings tracker. Jars are virtual allocations, not real bank transfers — no banking or payment integration is included.
+> No real bank/payment integration — this is a manual/import-based tracker, not a service that moves actual money.
 
 ## Features
 
 - Register / log in (Flask-Login, hashed passwords)
-- First-time setup: income, pocket money, money owed to others, and current savings — shown on the dashboard, editable anytime
-- Dashboard: total balance, this month's spending, money saved in jars, category spending chart
-- Rule-based spending insight comparing this month's top category to last month
-- Create jars with a target amount, optional monthly target, and emoji; deposit, withdraw, and track progress with an ETA
+- First-time setup: income, pocket money, and current savings — editable anytime from the dashboard
+- Dashboard: Pocket Money, Income, Savings (with a quick "add to savings" action), and all-time Total Expenses
+- Rule-based spending insight comparing this month's top category to last month, plus a category spending chart
 - Income/expense transactions with categories and full history
 - Import transactions from a Paytm (or any bank/UPI app) statement export (CSV/Excel) — auto-categorized, duplicate-safe
 - CSRF-protected forms
 - Installable as a home-screen app on iOS/Android (PWA — manifest, icons, service worker)
+
+Goal-based savings jars (multiple named jars with targets/ETAs) were part of an earlier version and the backend/routes still exist (`backend/routes/jars.py`), but they're no longer linked from the nav or dashboard — the app now centers on the single Pocket Money/Income/Savings/Expenses view above.
 
 ## Tech stack
 
@@ -64,5 +65,5 @@ See [DEPLOY.md](DEPLOY.md) for step-by-step instructions to host this on PythonA
 
 ## Roadmap
 
-- **Stage 2:** monthly budgets, recurring expenses, Auto-Jar income splitting, monthly reports
+- **Stage 2:** monthly budgets, recurring expenses, monthly reports
 - **Stage 3:** real bank/payment integration via a regulated provider (not a DIY bank-credential store)

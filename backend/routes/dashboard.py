@@ -5,8 +5,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import func
 
 from models import db
-from models.jar import Jar
-from models.transaction import EXPENSE, INCOME, Transaction
+from models.transaction import EXPENSE, Transaction
 
 bp = Blueprint("dashboard", __name__)
 
@@ -82,13 +81,7 @@ def index():
         return redirect(url_for("profile.setup"))
 
     now = datetime.utcnow()
-    all_income = _sum(current_user.id, INCOME)
-    all_expense = _sum(current_user.id, EXPENSE)
-    month_spent = _sum(current_user.id, EXPENSE, month=now.month, year=now.year)
-
-    jars = Jar.query.filter_by(user_id=current_user.id).order_by(Jar.created_at.desc()).all()
-    saved_in_jars = sum(jar.saved_amount for jar in jars)
-    total_balance = all_income - all_expense - saved_in_jars
+    total_expenses = _sum(current_user.id, EXPENSE)
 
     category_rows = (
         db.session.query(Transaction.category, func.coalesce(func.sum(Transaction.amount), 0.0))
@@ -103,11 +96,7 @@ def index():
 
     return render_template(
         "dashboard.html",
-        total_balance=total_balance,
-        month_spent=month_spent,
-        saved_in_jars=saved_in_jars,
-        all_income=all_income,
-        jars=jars,
+        total_expenses=total_expenses,
         insight=_spending_insight(current_user.id),
         chart_labels=[row[0] for row in category_rows],
         chart_values=[row[1] for row in category_rows],

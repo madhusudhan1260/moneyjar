@@ -12,9 +12,6 @@
     <label>Pocket money — day-to-day spending allowance (₹)
       <input type="number" name="pocket_money" min="0" step="1" value="{{ current_user.pocket_money|int if current_user.pocket_money else '' }}" placeholder="e.g. 5000">
     </label>
-    <label>How much do you need to give people — dues, repayments, loans (₹)
-      <input type="number" name="money_to_give" min="0" step="1" value="{{ current_user.money_to_give|int if current_user.money_to_give else '' }}" placeholder="e.g. 2000">
-    </label>
     <label>Current savings (₹)
       <input type="number" name="current_savings" min="0" step="1" value="{{ current_user.current_savings|int if current_user.current_savings else '' }}" placeholder="e.g. 15000">
     </label>

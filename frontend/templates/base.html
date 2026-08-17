@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}MoneyJar{% endblock %}</title>
-  <meta name="description" content="Divide your money into goal-based jars and reach your savings goals faster.">
+  <meta name="description" content="Track your income, pocket money, savings, and expenses in one place.">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
   <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
@@ -33,7 +33,6 @@
       <a href="{{ url_for('transactions.history') }}">Transactions</a>
       <a href="{{ url_for('transactions.create') }}">+ Add Transaction</a>
       <a href="{{ url_for('transactions.import_statement') }}">Import Statement</a>
-      <a href="{{ url_for('jars.create') }}">+ New Jar</a>
       <a href="{{ url_for('auth.logout') }}">Logout ({{ current_user.name }})</a>
     </div>
   </nav>
