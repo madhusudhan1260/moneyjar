@@ -15,6 +15,12 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    onboarded = db.Column(db.Boolean, default=False, nullable=False)
+    monthly_income = db.Column(db.Float, default=0, nullable=False)
+    pocket_money = db.Column(db.Float, default=0, nullable=False)
+    money_to_give = db.Column(db.Float, default=0, nullable=False)
+    current_savings = db.Column(db.Float, default=0, nullable=False)
+
     transactions = db.relationship(
         "Transaction", backref="user", lazy=True, cascade="all, delete-orphan"
     )

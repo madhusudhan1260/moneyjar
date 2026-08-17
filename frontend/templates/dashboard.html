@@ -23,6 +23,20 @@
 </div>
 {% endif %}
 
+{% if current_user.monthly_income or current_user.pocket_money or current_user.money_to_give or current_user.current_savings %}
+<div class="section-header"><h2>Your Plan</h2><a class="btn btn-secondary" href="{{ url_for('profile.setup') }}">Edit</a></div>
+<div class="plan-grid">
+  <div class="plan-item"><span class="stat-label">Monthly Income</span><strong>₹{{ "{:,.0f}".format(current_user.monthly_income) }}</strong></div>
+  <div class="plan-item"><span class="stat-label">Pocket Money</span><strong>₹{{ "{:,.0f}".format(current_user.pocket_money) }}</strong></div>
+  <div class="plan-item"><span class="stat-label">To Give Others</span><strong>₹{{ "{:,.0f}".format(current_user.money_to_give) }}</strong></div>
+  <div class="plan-item"><span class="stat-label">Savings</span><strong>₹{{ "{:,.0f}".format(current_user.current_savings) }}</strong></div>
+</div>
+{% else %}
+<div class="insight-card">
+  <p>Haven't set up your financial snapshot yet. <a href="{{ url_for('profile.setup') }}">Add it now</a> — income, pocket money, dues, and savings, all in one place.</p>
+</div>
+{% endif %}
+
 <div class="section-header">
   <h2>My Jars</h2>
   <a class="btn btn-primary" href="{{ url_for('jars.create') }}">+ Create New Jar</a>

@@ -89,6 +89,25 @@ body {
 .stat-label { color: var(--muted); font-size: 13px; }
 .stat-value { font-size: 26px; font-weight: 700; }
 
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.plan-item {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.plan-item strong { font-size: 20px; }
+
 .insight-card {
   background: linear-gradient(135deg, rgba(108, 92, 231, 0.18), rgba(108, 92, 231, 0.05));
   border: 1px solid rgba(108, 92, 231, 0.35);

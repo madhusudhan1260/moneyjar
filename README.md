@@ -7,6 +7,7 @@ A digital money management platform where you divide your income into goal-based
 ## Features
 
 - Register / log in (Flask-Login, hashed passwords)
+- First-time setup: income, pocket money, money owed to others, and current savings — shown on the dashboard, editable anytime
 - Dashboard: total balance, this month's spending, money saved in jars, category spending chart
 - Rule-based spending insight comparing this month's top category to last month
 - Create jars with a target amount, optional monthly target, and emoji; deposit, withdraw, and track progress with an ETA
